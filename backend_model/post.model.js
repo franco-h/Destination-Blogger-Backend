@@ -5,8 +5,9 @@ let postSchema = new Schema({
     // id for reference in update and delete functionality
     id: String,
     destination: String,
-    Location: String,
-    description: String
+    location: String,
+    description: String,
+    image: String
 });
 
 // Create post
