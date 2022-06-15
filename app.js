@@ -1,8 +1,11 @@
-let express = require('express');
-let app = express();
 let mongoose = require('mongoose');
+let express = require('express');
+let cors = require('cors');
 // Import Post Schema
 let Post = require('./backend_model/post.model').Post;
+let app = express();
+
+app.use(cors());
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://admin:nelly12345@travel.qxbuv8f.mongodb.net/?retryWrites=true&w=majority',{useNewUrlParser: true, useUnifiedTopology: true});
