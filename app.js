@@ -19,7 +19,7 @@ app.get('/posts', async(req, res) => {
     res.send(posts);
 });
 
-app.get('/posts', async(req, res) => {
+app.post('/posts', async(req, res) => {
     let reqBody = req.body;
     let newArticle = new Post({
         id: '' + id++,
