@@ -10,6 +10,7 @@ let app = express();
 console.log(uniqid());
 
 app.use(cors());
+app.set('view engine', 'ejs');
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://admin:nelly12345@travel.qxbuv8f.mongodb.net/?retryWrites=true&w=majority',{useNewUrlParser: true, useUnifiedTopology: true});
@@ -84,7 +85,21 @@ app.delete('/contacts/:id',  async (req, res) => {
     res.send('Message Deleted');
 });
 
+/*METHODS FOR DETAIL RENDERING*/
+app.get('/detail', async (req, res) => {
+    let id = req.query.id;
+    let post = await Post.findOne({id: id});
+    res.render('detail', {
+        destination: post.destination,
+        location: post.location,
+        image: post.image,
+        description: post.description
+    })
+})
+
+
 app.use(express.static('client'));
+app.get("")
 
 let port = process.env.PORT || 3000;
 app.listen(port,() => console.log('Server started on port ' + port));
