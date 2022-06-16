@@ -61,17 +61,15 @@ app.put('/posts/:id', async(req, res) => {
     res.send("Edited");
 });
 
-app.get('/detail', async (req, resp) => {
-    let id = req.query.id;
-    let post = await Post.findOne({id: id});
-    resp.render('detail', {
-        destination: post.destination,
-        location: post.location,
-        image: post.image,
-        description: post.description
+// /detail will return the detail of the post
+app.get('/detail', async(req, res) => {
+    res.render('detail', {
+        destination: 'Tokyo',
+        location: 'Japan',
+        image: 'https://images.unsplash.com/photo-1518791841217-8f162f1e1131?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60',
+        description: 'Tokyo is the capital of Japan, and the center of the Greater Tokyo Area. It is the most populous city in Japan, with a metropolitan area of 8.6 million inhabitants.'
     })
-})
-
+});
 
 /* METHODS FOR CONTACTS*/
 // app.get('/contacts', async (req, res) => {
