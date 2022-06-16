@@ -85,6 +85,8 @@ app.delete('/contacts/:id',  async (req, res) => {
     res.send('Message Deleted');
 });
 
+app.use(express.static('client'));
+
 /*METHODS FOR DETAIL RENDERING*/
 app.get('/detail', async (req, res) => {
     let id = req.query.id;
@@ -97,9 +99,6 @@ app.get('/detail', async (req, res) => {
     })
 })
 
-
-app.use(express.static('client'));
-app.get("")
 
 let port = process.env.PORT || 3000;
 app.listen(port,() => console.log('Server started on port ' + port));
