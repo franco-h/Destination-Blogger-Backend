@@ -1,8 +1,9 @@
 let mongoose = require('mongoose');
 let express = require('express');
 let cors = require('cors');
-// Import Post Schema
+// Import Post and Contact Schema
 let Post = require('./backend_model/post.model').Post;
+let Contact = require('./backend_model/contact.model').Contact;
 let uniqid = require("uniqid");
 let app = express();
 
@@ -17,7 +18,7 @@ app.use(express.json());
 // Generate unique id order for each JSON object
 let id = 1;
 
-/* ALL POST METHODS*/
+/* METHODS FOR ARTICLES*/
 // Get all posts object and return them
 app.get('/posts', async(req, res) => {
     let posts = await Post.find();
@@ -57,6 +58,30 @@ app.put('/posts/:id', async(req, res) => {
     let id = req.params.id;
     await Post.updateOne({id:id}, req.body);
     res.send("Edited");
+});
+
+
+/* METHODS FOR CONTACTS*/
+app.get('/contacts', async (req, resp) => {
+    resp.send(await Contact.find());
+});
+
+app.post('/contacts', async (req, resp) => {
+    let reqBody = req.body;
+    let newContact = new Contact({
+        id: uniqid(),
+        name: reqBody.name,
+        email: reqBody.email,
+        text: reqBody.text,
+        date: new Date()
+    });
+    await newContact.save();
+    resp.send('Message sent');
+});
+
+app.delete('/contacts/:id',  async (req, resp) => {
+    await Email.deleteOne({id: req.params.id});
+    resp.send('Message Deleted');
 });
 
 app.use(express.static('client'));
