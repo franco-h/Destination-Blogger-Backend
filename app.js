@@ -18,9 +18,17 @@ app.use(express.json());
 let id = 1;
 
 /* ALL POST METHODS*/
+// Get all posts object and return them
 app.get('/posts', async(req, res) => {
     let posts = await Post.find();
     res.send(posts);
+});
+
+//Use id to locate JSON object with same id in order to update
+app.get('/posts/:id', async(req, res) => {
+    let id = req.params.id;
+    let post = await Post.findOne({id : id});
+    res.send(post);
 });
 
 app.post('/posts', async(req, res) => {
