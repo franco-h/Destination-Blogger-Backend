@@ -62,11 +62,11 @@ app.put('/posts/:id', async(req, res) => {
 
 
 /* METHODS FOR CONTACTS*/
-app.get('/contacts', async (req, resp) => {
-    resp.send(await Contact.find());
+app.get('/contacts', async (req, res) => {
+    res.send(await Contact.find());
 });
 
-app.post('/contacts', async (req, resp) => {
+app.post('/contacts', async (req, res) => {
     let reqBody = req.body;
     let newContact = new Contact({
         id: uniqid(),
@@ -76,12 +76,12 @@ app.post('/contacts', async (req, resp) => {
         date: new Date()
     });
     await newContact.save();
-    resp.send('Message sent');
+    res.send('Message sent');
 });
 
-app.delete('/contacts/:id',  async (req, resp) => {
+app.delete('/contacts/:id',  async (req, res) => {
     await Email.deleteOne({id: req.params.id});
-    resp.send('Message Deleted');
+    res.send('Message Deleted');
 });
 
 app.use(express.static('client'));
