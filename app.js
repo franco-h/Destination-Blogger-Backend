@@ -9,6 +9,7 @@ let app = express();
 
 console.log(uniqid());
 
+app.set('view engine', 'ejs');
 app.use(cors());
 
 // Connect to MongoDB
@@ -60,29 +61,40 @@ app.put('/posts/:id', async(req, res) => {
     res.send("Edited");
 });
 
+app.get('/detail', async (req, resp) => {
+    let id = req.query.id;
+    let post = await Post.findOne({id: id});
+    resp.render('detail', {
+        destination: post.destination,
+        location: post.location,
+        image: post.image,
+        description: post.description
+    })
+})
+
 
 /* METHODS FOR CONTACTS*/
-app.get('/contacts', async (req, res) => {
-    res.send(await Contact.find());
-});
+// app.get('/contacts', async (req, res) => {
+//     res.send(await Contact.find());
+// });
 
-app.post('/contacts', async (req, res) => {
-    let reqBody = req.body;
-    let newContact = new Contact({
-        id: uniqid(),
-        name: reqBody.name,
-        email: reqBody.email,
-        message: reqBody.message,
-        date: new Date()
-    });
-    await newContact.save();
-    res.send('Message sent');
-});
+// app.post('/contacts', async (req, res) => {
+//     let reqBody = req.body;
+//     let newContact = new Contact({
+//         id: uniqid(),
+//         name: reqBody.name,
+//         email: reqBody.email,
+//         message: reqBody.message,
+//         date: new Date()
+//     });
+//     await newContact.save();
+//     res.send('Message sent');
+// });
 
-app.delete('/contacts/:id',  async (req, res) => {
-    await Email.deleteOne({id: req.params.id});
-    res.send('Message Deleted');
-});
+// app.delete('/contacts/:id',  async (req, res) => {
+//     await Email.deleteOne({id: req.params.id});
+//     res.send('Message Deleted');
+// });
 
 app.use(express.static('client'));
 
