@@ -72,7 +72,7 @@ app.post('/contacts', async (req, res) => {
         id: uniqid(),
         name: reqBody.name,
         email: reqBody.email,
-        text: reqBody.text,
+        message: reqBody.message,
         date: new Date()
     });
     await newContact.save();
