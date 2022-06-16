@@ -31,6 +31,7 @@ app.get('/posts/:id', async(req, res) => {
     res.send(post);
 });
 
+// Create a new post object
 app.post('/posts', async(req, res) => {
     let reqBody = req.body;
     let newArticle = new Post({
@@ -44,11 +45,19 @@ app.post('/posts', async(req, res) => {
     res.send("Created");
 });
 
+// Delete a post object based on id
 app.delete('/posts/:id',async (req, res) =>{
     let id = req.params.id;
     await Post.deleteOne({id:id});
     res.send("Deleted");
-})
+});
+
+// Edit a post object based on id
+app.put('/posts/:id', async(req, res) => {
+    let id = req.params.id;
+    await Post.updateOne({id:id}, req.body);
+    res.send("Edited");
+});
 
 app.use(express.static('client'));
 
