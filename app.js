@@ -9,8 +9,9 @@ let app = express();
 
 console.log(uniqid());
 
-app.use(cors());
 app.set('view engine', 'ejs');
+app.use(cors());
+
 
 // Connect to MongoDB
 mongoose.connect('mongodb+srv://admin:nelly12345@travel.qxbuv8f.mongodb.net/?retryWrites=true&w=majority',{useNewUrlParser: true, useUnifiedTopology: true});
@@ -85,9 +86,8 @@ app.delete('/contacts/:id',  async (req, res) => {
     res.send('Message Deleted');
 });
 
-app.use(express.static('client'));
-
 /*METHODS FOR DETAIL RENDERING*/
+// When frontend send GET request to /detail?id=<id>, it will get the JSON object with id=<id> from /posts and render it to detail.ejs
 app.get('/detail', async (req, res) => {
     let id = req.query.id;
     let post = await Post.findOne({id: id});
@@ -97,8 +97,9 @@ app.get('/detail', async (req, res) => {
         image: post.image,
         description: post.description
     })
-})
+});
 
+app.use(express.static('client'));
 
 let port = process.env.PORT || 3000;
 app.listen(port,() => console.log('Server started on port ' + port));
